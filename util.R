@@ -145,3 +145,159 @@ save_analysis_results_1 <- function(type) {
   true_sex_cond <<- c(true_sex_cond, rep(b_sex_cond, n_experiments_per_repeat))
   analysis_type <<- c(analysis_type, rep(type, n_experiments_per_repeat))
 }
+
+save_results_meta <- function() {
+  print(">>>>>>>> Saving results")
+  # combine results into a data frame
+  results <- data.frame(repeat_id, expt, analysis_type,
+                        true_base, b_base_lower, b_base_med, b_base_upper,
+                        true_sex, b_sex_p_value, b_sex_lower, b_sex_med, b_sex_upper,
+                        true_cond, b_cond_p_value, b_cond_lower, b_cond_med, b_cond_upper, 
+                        true_sex_cond, b_sex_cond_p_value, b_sex_cond_lower, b_sex_cond_med, b_sex_cond_upper)
+  rm(this_anova, this_data_set, model, ci, p_vals,
+     glmm, fe,
+     successes, np, nt,
+     repeat_id, expt, analysis_type,
+     true_base, b_base_lower, b_base_med, b_base_upper,
+     true_sex, b_sex_p_value, b_sex_lower, b_sex_med, b_sex_upper,
+     true_cond, b_cond_p_value, b_cond_lower, b_cond_med, b_cond_upper, 
+     true_sex_cond, b_sex_cond_p_value, b_sex_cond_lower, b_sex_cond_med, b_sex_cond_upper)
+  
+  for (rep in 1:n_repeats) {
+    anova_results <- results[results$repeat_id == rep & results$analysis_type == "anova",]
+    glmm_results <- results[results$repeat_id == rep & results$analysis_type == "glmm",]
+    bglmm_results <- results[results$repeat_id == rep & results$analysis_type == "bglmm",]
+    pp_results <- results[results$repeat_id == rep & results$analysis_type == "pp",]
+    
+    meta_base_estimate_anova <<- c(meta_base_estimate_anova, mean(anova_results$b_base_med))
+    meta_sex_estimate_anova <<- c(meta_sex_estimate_anova, mean(anova_results$b_sex_med))
+    meta_cond_estimate_anova <<- c(meta_cond_estimate_anova, mean(anova_results$b_cond_med))
+    meta_sex_cond_estimate_anova <<- c(meta_sex_cond_estimate_anova, mean(anova_results$b_sex_cond_med))
+    
+    meta_base_estimate_glmm <<- c(meta_base_estimate_glmm, mean(glmm_results$b_base_med))
+    meta_sex_estimate_glmm <<- c(meta_sex_estimate_glmm, mean(glmm_results$b_sex_med))
+    meta_cond_estimate_glmm <<- c(meta_cond_estimate_glmm, mean(glmm_results$b_cond_med))
+    meta_sex_cond_estimate_glmm <<- c(meta_sex_cond_estimate_glmm, mean(glmm_results$b_sex_cond_med))
+    
+    meta_base_estimate_bglmm <<- c(meta_base_estimate_bglmm, mean(bglmm_results$b_base_med))
+    meta_sex_estimate_bglmm <<- c(meta_sex_estimate_bglmm, mean(bglmm_results$b_sex_med))
+    meta_cond_estimate_bglmm <<- c(meta_cond_estimate_bglmm, mean(bglmm_results$b_cond_med))
+    meta_sex_cond_estimate_bglmm <<- c(meta_sex_cond_estimate_bglmm, mean(bglmm_results$b_sex_cond_med))
+    
+    if (pp_final_expt_only == FALSE) {
+      meta_base_estimate_pp <<- c(meta_base_estimate_pp, mean(pp_results$b_base_med))
+      meta_sex_estimate_pp <<- c(meta_sex_estimate_pp, mean(pp_results$b_sex_med))
+      meta_cond_estimate_pp <<- c(meta_cond_estimate_pp, mean(pp_results$b_cond_med))
+      meta_sex_cond_estimate_pp <<- c(meta_sex_cond_estimate_pp, mean(pp_results$b_sex_cond_med))
+    } else {
+      meta_base_estimate_pp <<- c(meta_base_estimate_pp, pp_results$b_base_med[pp_results$expt == n_experiments_per_repeat])
+      meta_sex_estimate_pp <<- c(meta_sex_estimate_pp, pp_results$b_sex_med[pp_results$expt == n_experiments_per_repeat])
+      meta_cond_estimate_pp <<- c(meta_cond_estimate_pp, pp_results$b_cond_med[pp_results$expt == n_experiments_per_repeat])
+      meta_sex_cond_estimate_pp <<- c(meta_sex_cond_estimate_pp, pp_results$b_sex_cond_med[pp_results$expt == n_experiments_per_repeat])
+    }
+    
+    meta_base_estimate_upper_anova <<- c(meta_base_estimate_upper_anova, mean(anova_results$b_base_upper))
+    meta_sex_estimate_upper_anova <<- c(meta_sex_estimate_upper_anova, mean(anova_results$b_sex_upper))
+    meta_cond_estimate_upper_anova <<- c(meta_cond_estimate_upper_anova, mean(anova_results$b_cond_upper))
+    meta_sex_cond_estimate_upper_anova <<- c(meta_sex_cond_estimate_upper_anova, mean(anova_results$b_sex_cond_upper))
+    
+    meta_base_estimate_upper_glmm <<- c(meta_base_estimate_upper_glmm, mean(glmm_results$b_base_upper))
+    meta_sex_estimate_upper_glmm <<- c(meta_sex_estimate_upper_glmm, mean(glmm_results$b_sex_upper))
+    meta_cond_estimate_upper_glmm <<- c(meta_cond_estimate_upper_glmm, mean(glmm_results$b_cond_upper))
+    meta_sex_cond_estimate_upper_glmm <<- c(meta_sex_cond_estimate_upper_glmm, mean(glmm_results$b_sex_cond_upper))
+    
+    meta_base_estimate_upper_bglmm <<- c(meta_base_estimate_upper_bglmm, mean(bglmm_results$b_base_upper))
+    meta_sex_estimate_upper_bglmm <<- c(meta_sex_estimate_upper_bglmm, mean(bglmm_results$b_sex_upper))
+    meta_cond_estimate_upper_bglmm <<- c(meta_cond_estimate_upper_bglmm, mean(bglmm_results$b_cond_upper))
+    meta_sex_cond_estimate_upper_bglmm <<- c(meta_sex_cond_estimate_upper_bglmm, mean(bglmm_results$b_sex_cond_upper))
+    
+    if (pp_final_expt_only == FALSE) {
+      meta_base_estimate_upper_pp <<- c(meta_base_estimate_upper_pp, mean(pp_results$b_base_upper))
+      meta_sex_estimate_upper_pp <<- c(meta_sex_estimate_upper_pp, mean(pp_results$b_sex_upper))
+      meta_cond_estimate_upper_pp <<- c(meta_cond_estimate_upper_pp, mean(pp_results$b_cond_upper))
+      meta_sex_cond_estimate_upper_pp <<- c(meta_sex_cond_estimate_upper_pp, mean(pp_results$b_sex_cond_upper))
+    } else {
+      meta_base_estimate_upper_pp <<- c(meta_base_estimate_upper_pp, pp_results$b_base_upper[pp_results$expt == n_experiments_per_repeat])
+      meta_sex_estimate_upper_pp <<- c(meta_sex_estimate_upper_pp, pp_results$b_sex_upper[pp_results$expt == n_experiments_per_repeat])
+      meta_cond_estimate_upper_pp <<- c(meta_cond_estimate_upper_pp, pp_results$b_cond_upper[pp_results$expt == n_experiments_per_repeat])
+      meta_sex_cond_estimate_upper_pp <<- c(meta_sex_cond_estimate_upper_pp, pp_results$b_sex_cond_upper[pp_results$expt == n_experiments_per_repeat])
+    }
+    
+    meta_base_estimate_lower_anova <<- c(meta_base_estimate_lower_anova, mean(anova_results$b_base_lower))
+    meta_sex_estimate_lower_anova <<- c(meta_sex_estimate_lower_anova, mean(anova_results$b_sex_lower))
+    meta_cond_estimate_lower_anova <<- c(meta_cond_estimate_lower_anova, mean(anova_results$b_cond_lower))
+    meta_sex_cond_estimate_lower_anova <<- c(meta_sex_cond_estimate_lower_anova, mean(anova_results$b_sex_cond_lower))
+    
+    meta_base_estimate_lower_glmm <<- c(meta_base_estimate_lower_glmm, mean(glmm_results$b_base_lower))
+    meta_sex_estimate_lower_glmm <<- c(meta_sex_estimate_lower_glmm, mean(glmm_results$b_sex_lower))
+    meta_cond_estimate_lower_glmm <<- c(meta_cond_estimate_lower_glmm, mean(glmm_results$b_cond_lower))
+    meta_sex_cond_estimate_lower_glmm <<- c(meta_sex_cond_estimate_lower_glmm, mean(glmm_results$b_sex_cond_lower))
+    
+    meta_base_estimate_lower_bglmm <<- c(meta_base_estimate_lower_bglmm, mean(bglmm_results$b_base_lower))
+    meta_sex_estimate_lower_bglmm <<- c(meta_sex_estimate_lower_bglmm, mean(bglmm_results$b_sex_lower))
+    meta_cond_estimate_lower_bglmm <<- c(meta_cond_estimate_lower_bglmm, mean(bglmm_results$b_cond_lower))
+    meta_sex_cond_estimate_lower_bglmm <<- c(meta_sex_cond_estimate_lower_bglmm, mean(bglmm_results$b_sex_cond_lower))
+    
+    if (pp_final_expt_only == FALSE) {
+      meta_base_estimate_lower_pp <<- c(meta_base_estimate_lower_pp, mean(pp_results$b_base_lower))
+      meta_sex_estimate_lower_pp <<- c(meta_sex_estimate_lower_pp, mean(pp_results$b_sex_lower))
+      meta_cond_estimate_lower_pp <<- c(meta_cond_estimate_lower_pp, mean(pp_results$b_cond_lower))
+      meta_sex_cond_estimate_lower_pp <<- c(meta_sex_cond_estimate_lower_pp, mean(pp_results$b_sex_cond_lower))
+    } else {
+      meta_base_estimate_lower_pp <<- c(meta_base_estimate_lower_pp, pp_results$b_base_lower[pp_results$expt == n_experiments_per_repeat])
+      meta_sex_estimate_lower_pp <<- c(meta_sex_estimate_lower_pp, pp_results$b_sex_lower[pp_results$expt == n_experiments_per_repeat])
+      meta_cond_estimate_lower_pp <<- c(meta_cond_estimate_lower_pp, pp_results$b_cond_lower[pp_results$expt == n_experiments_per_repeat])
+      meta_sex_cond_estimate_lower_pp <<- c(meta_sex_cond_estimate_lower_pp, pp_results$b_sex_cond_lower[pp_results$expt == n_experiments_per_repeat])
+    }
+    
+    meta_sex_positive_rate_anova <<- c(meta_sex_positive_rate_anova, mean(anova_results$b_sex_p_value < 0.05))
+    meta_cond_positive_rate_anova <<- c(meta_cond_positive_rate_anova, mean(anova_results$b_cond_p_value < 0.05))
+    meta_sex_cond_positive_rate_anova <<- c(meta_sex_cond_positive_rate_anova, mean(anova_results$b_sex_cond_p_value < 0.05))
+    
+    meta_sex_positive_rate_glmm <<- c(meta_sex_positive_rate_glmm, mean(glmm_results$b_sex_lower > 0 | glmm_results$b_sex_upper < 0))
+    meta_cond_positive_rate_glmm <<- c(meta_cond_positive_rate_glmm, mean(glmm_results$b_cond_lower > 0 | glmm_results$b_cond_upper < 0))
+    meta_sex_cond_positive_rate_glmm <<- c(meta_sex_cond_positive_rate_glmm, mean(glmm_results$b_sex_cond_lower > 0 | glmm_results$b_sex_cond_upper < 0))
+    
+    meta_sex_positive_rate_bglmm <<- c(meta_sex_positive_rate_bglmm, mean(bglmm_results$b_sex_lower > 0 | bglmm_results$b_sex_upper < 0))
+    meta_cond_positive_rate_bglmm <<- c(meta_cond_positive_rate_bglmm, mean(bglmm_results$b_cond_lower > 0 | bglmm_results$b_cond_upper < 0))
+    meta_sex_cond_positive_rate_bglmm <<- c(meta_sex_cond_positive_rate_bglmm, mean(bglmm_results$b_sex_cond_lower > 0 | bglmm_results$b_sex_cond_upper < 0))
+    
+    if (pp_final_expt_only == FALSE) {
+      meta_sex_positive_rate_pp <<- c(meta_sex_positive_rate_pp, mean(pp_results$b_sex_lower > 0 | pp_results$b_sex_upper < 0))
+      meta_cond_positive_rate_pp <<- c(meta_cond_positive_rate_pp, mean(pp_results$b_cond_lower > 0 | pp_results$b_cond_upper < 0))
+      meta_sex_cond_positive_rate_pp <<- c(meta_sex_cond_positive_rate_pp, mean(pp_results$b_sex_cond_lower > 0 | pp_results$b_sex_cond_upper < 0))
+    } else {
+      meta_sex_positive_rate_pp <<- c(meta_sex_positive_rate_pp, 1*(pp_results$b_sex_lower[pp_results$expt == n_experiments_per_repeat] > 0 | pp_results$b_sex_upper[pp_results$expt == n_experiments_per_repeat] < 0))
+      meta_cond_positive_rate_pp <<- c(meta_cond_positive_rate_pp, 1*(pp_results$b_cond_lower[pp_results$expt == n_experiments_per_repeat] > 0 | pp_results$b_cond_upper[pp_results$expt == n_experiments_per_repeat] < 0))
+      meta_sex_cond_positive_rate_pp <<- c(meta_sex_cond_positive_rate_pp, 1*(pp_results$b_sex_cond_lower[pp_results$expt == n_experiments_per_repeat] > 0 | pp_results$b_sex_cond_upper[pp_results$expt == n_experiments_per_repeat] < 0))
+    }
+    
+    meta_base_uncertainty_anova <<- c(meta_base_uncertainty_anova, mean(anova_results$b_base_upper - anova_results$b_base_lower))
+    meta_sex_uncertainty_anova <<- c(meta_sex_uncertainty_anova, mean(anova_results$b_sex_upper - anova_results$b_sex_lower))
+    meta_cond_uncertainty_anova <<- c(meta_cond_uncertainty_anova, mean(anova_results$b_cond_upper - anova_results$b_cond_lower))
+    meta_sex_cond_uncertainty_anova <<- c(meta_sex_cond_uncertainty_anova, mean(anova_results$b_sex_cond_upper - anova_results$b_sex_cond_lower))
+    
+    meta_base_uncertainty_glmm <<- c(meta_base_uncertainty_glmm, mean(glmm_results$b_base_upper - glmm_results$b_base_lower))
+    meta_sex_uncertainty_glmm <<- c(meta_sex_uncertainty_glmm, mean(glmm_results$b_sex_upper - glmm_results$b_sex_lower))
+    meta_cond_uncertainty_glmm <<- c(meta_cond_uncertainty_glmm, mean(glmm_results$b_cond_upper - glmm_results$b_cond_lower))
+    meta_sex_cond_uncertainty_glmm <<- c(meta_sex_cond_uncertainty_glmm, mean(glmm_results$b_sex_cond_upper - glmm_results$b_sex_cond_lower))
+    
+    meta_base_uncertainty_bglmm <<- c(meta_base_uncertainty_bglmm, mean(bglmm_results$b_base_upper - bglmm_results$b_base_lower))
+    meta_sex_uncertainty_bglmm <<- c(meta_sex_uncertainty_bglmm, mean(bglmm_results$b_sex_upper - bglmm_results$b_sex_lower))
+    meta_cond_uncertainty_bglmm <<- c(meta_cond_uncertainty_bglmm, mean(bglmm_results$b_cond_upper - bglmm_results$b_cond_lower))
+    meta_sex_cond_uncertainty_bglmm <<- c(meta_sex_cond_uncertainty_bglmm, mean(bglmm_results$b_sex_cond_upper - bglmm_results$b_sex_cond_lower))
+    
+    if (pp_final_expt_only == FALSE) {
+      meta_base_uncertainty_pp <<- c(meta_base_uncertainty_pp, mean(pp_results$b_base_upper - pp_results$b_base_lower))
+      meta_sex_uncertainty_pp <<- c(meta_sex_uncertainty_pp, mean(pp_results$b_sex_upper - pp_results$b_sex_lower))
+      meta_cond_uncertainty_pp <<- c(meta_cond_uncertainty_pp, mean(pp_results$b_cond_upper - pp_results$b_cond_lower))
+      meta_sex_cond_uncertainty_pp <<- c(meta_sex_cond_uncertainty_pp, mean(pp_results$b_sex_cond_upper - pp_results$b_sex_cond_lower))
+    } else {
+      meta_base_uncertainty_pp <<- c(meta_base_uncertainty_pp, pp_results$b_base_upper[pp_results$expt == n_experiments_per_repeat] - pp_results$b_base_lower[pp_results$expt == n_experiments_per_repeat])
+      meta_sex_uncertainty_pp <<- c(meta_sex_uncertainty_pp, pp_results$b_sex_upper[pp_results$expt == n_experiments_per_repeat] - pp_results$b_sex_lower[pp_results$expt == n_experiments_per_repeat])
+      meta_cond_uncertainty_pp <<- c(meta_cond_uncertainty_pp, pp_results$b_cond_upper[pp_results$expt == n_experiments_per_repeat] - pp_results$b_cond_lower[pp_results$expt == n_experiments_per_repeat])
+      meta_sex_cond_uncertainty_pp <<- c(meta_sex_cond_uncertainty_pp, pp_results$b_sex_cond_upper[pp_results$expt == n_experiments_per_repeat] - pp_results$b_sex_cond_lower[pp_results$expt == n_experiments_per_repeat])
+    }
+  }
+  rm(anova_results, glmm_results, bglmm_results, pp_results)
+}

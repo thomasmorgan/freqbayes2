@@ -4,6 +4,7 @@ do_analyses <- function() {
   if (do_anova == TRUE) {
     print(">>>>>>>>>>>> Doing anovas")
     # prep columns
+    # this function is in util.R
     save_analysis_results_1("anova")
     
     for (experiment in 1:n_experiments_per_repeat) {
@@ -41,6 +42,7 @@ do_analyses <- function() {
   if (do_glmm == TRUE) {
     print(">>>>>>>>>>>> Doing glmms")
     # prep columns
+    # this function is in util.R
     save_analysis_results_1("glmm")
     
     for (experiment in 1:n_experiments_per_repeat) {
@@ -77,6 +79,7 @@ do_analyses <- function() {
   if (do_bglmm == TRUE) {
     print(">>>>>>>>>>>> Doing b-glmms")
     # prep columns
+    # this function is in util.R
     save_analysis_results_1("bglmm")
     
     for (experiment in 1:n_experiments_per_repeat) {
@@ -124,6 +127,7 @@ do_analyses <- function() {
   if (do_pp == TRUE) {
     print(">>>>>>>>>>>> Doing posterior passing")
     # prep columns
+    # this function is in util.R
     save_analysis_results_1("pp")
     
     #set initial prior for beta[4]
