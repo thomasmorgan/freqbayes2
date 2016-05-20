@@ -135,3 +135,13 @@ prepare_data_vectors <- function() {
   b_sex_cond_med <<- vector()
   b_sex_cond_upper <<- vector()
 }
+
+save_analysis_results_1 <- function(type) {
+  repeat_id <<- c(repeat_id, rep(rep, n_experiments_per_repeat))
+  expt <<- c(expt, c(1:n_experiments_per_repeat))
+  true_base <<- c(true_base, rep(b_base, n_experiments_per_repeat))
+  true_sex <<- c(true_sex, rep(b_sex, n_experiments_per_repeat))
+  true_cond <<- c(true_cond, rep(b_cond, n_experiments_per_repeat))
+  true_sex_cond <<- c(true_sex_cond, rep(b_sex_cond, n_experiments_per_repeat))
+  analysis_type <<- c(analysis_type, rep(type, n_experiments_per_repeat))
+}

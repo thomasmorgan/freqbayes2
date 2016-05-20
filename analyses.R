@@ -4,13 +4,7 @@ do_analyses <- function() {
   if (do_anova == TRUE) {
     print(">>>>>>>>>>>> Doing anovas")
     # prep columns
-    repeat_id <<- c(repeat_id, rep(rep, n_experiments_per_repeat))
-    expt <<- c(expt, c(1:n_experiments_per_repeat))
-    true_base <<- c(true_base, rep(b_base, n_experiments_per_repeat))
-    true_sex <<- c(true_sex, rep(b_sex, n_experiments_per_repeat))
-    true_cond <<- c(true_cond, rep(b_cond, n_experiments_per_repeat))
-    true_sex_cond <<- c(true_sex_cond, rep(b_sex_cond, n_experiments_per_repeat))
-    analysis_type <<- c(analysis_type, rep("anova", n_experiments_per_repeat))
+    save_analysis_results_1("anova")
     
     for (experiment in 1:n_experiments_per_repeat) {
       # for every experiment get the relevant data set
@@ -47,13 +41,7 @@ do_analyses <- function() {
   if (do_glmm == TRUE) {
     print(">>>>>>>>>>>> Doing glmms")
     # prep columns
-    repeat_id <<- c(repeat_id, rep(rep, n_experiments_per_repeat))
-    expt <<- c(expt, c(1:n_experiments_per_repeat))
-    true_base <<- c(true_base, rep(b_base, n_experiments_per_repeat))
-    true_sex <<- c(true_sex, rep(b_sex, n_experiments_per_repeat))
-    true_cond <<- c(true_cond, rep(b_cond, n_experiments_per_repeat))
-    true_sex_cond <<- c(true_sex_cond, rep(b_sex_cond, n_experiments_per_repeat))
-    analysis_type <<- c(analysis_type, rep("glmm", n_experiments_per_repeat))
+    save_analysis_results_1("glmm")
     
     for (experiment in 1:n_experiments_per_repeat) {
       # for every experiment get the relevant data set
@@ -89,13 +77,7 @@ do_analyses <- function() {
   if (do_bglmm == TRUE) {
     print(">>>>>>>>>>>> Doing b-glmms")
     # prep columns
-    repeat_id <<- c(repeat_id, rep(rep, n_experiments_per_repeat))
-    expt <<- c(expt, c(1:n_experiments_per_repeat))
-    true_base <<- c(true_base, rep(b_base, n_experiments_per_repeat))
-    true_sex <<- c(true_sex, rep(b_sex, n_experiments_per_repeat))
-    true_cond <<- c(true_cond, rep(b_cond, n_experiments_per_repeat))
-    true_sex_cond <<- c(true_sex_cond, rep(b_sex_cond, n_experiments_per_repeat))
-    analysis_type <<- c(analysis_type, rep("bglmm", n_experiments_per_repeat))
+    save_analysis_results_1("bglmm")
     
     for (experiment in 1:n_experiments_per_repeat) {
       # for every experiment get the relevant data set
@@ -142,13 +124,7 @@ do_analyses <- function() {
   if (do_pp == TRUE) {
     print(">>>>>>>>>>>> Doing posterior passing")
     # prep columns
-    repeat_id <<- c(repeat_id, rep(rep, n_experiments_per_repeat))
-    expt <<- c(expt, c(1:n_experiments_per_repeat))
-    true_base <<- c(true_base, rep(b_base, n_experiments_per_repeat))
-    true_sex <<- c(true_sex, rep(b_sex, n_experiments_per_repeat))
-    true_cond <<- c(true_cond, rep(b_cond, n_experiments_per_repeat))
-    true_sex_cond <<- c(true_sex_cond, rep(b_sex_cond, n_experiments_per_repeat))
-    analysis_type <<- c(analysis_type, rep("pp", n_experiments_per_repeat))
+    save_analysis_results_1("pp")
     
     #set initial prior for beta[4]
     pp_u <<- rep(0, n_participants_per_experiment)
