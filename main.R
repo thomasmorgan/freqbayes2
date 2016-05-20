@@ -119,12 +119,13 @@ for (rep in 1:n_repeats) {
   ###
   ### Create the population ###
   ###
+  # This function is in simulation.R
   # The population is simply a data table with 3 columns:
   # id, sex, d_base
   # It is created with the "doppelganger quadrangle" method
   # so there are equal number of men and women and the true
   # mean and true variance of each sub population is the same
-  create_population()
+  population <- create_population()
   
   ###
   ### Create the datsets for each experiment ###
