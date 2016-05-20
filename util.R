@@ -1,0 +1,112 @@
+prepare_meta_vectors <- function() {
+  total_meta_conditions <<- length(b_bases)*length(b_sexs)*length(b_conds)*length(b_sex_conds)*length(var_bases)*length(var_sexs)*length(var_conds)*length(var_sex_conds)
+  meta_n_repeats <<- rep(n_repeats, total_meta_conditions)
+  meta_n_experiments_per_repeat <<- rep(n_experiments_per_repeat, total_meta_conditions)
+  meta_n_participants_per_experiment <<- rep(n_participants_per_experiment, total_meta_conditions)
+  meta_n_trials_per_participant <<- rep(n_trials_per_participant, total_meta_conditions)
+  meta_n_people <<- rep(n_people, total_meta_conditions)
+  meta_true_base <<- vector()
+  meta_true_sex <<- vector()
+  meta_true_cond <<- vector()
+  meta_true_sex_cond <<- vector()
+  meta_var_base <<- vector()
+  meta_var_sex <<- vector()
+  meta_var_cond <<- vector()
+  meta_var_sex_cond <<- vector()
+  
+  meta_base_estimate_anova <<- vector()
+  meta_sex_estimate_anova <<- vector()
+  meta_cond_estimate_anova <<- vector()
+  meta_sex_cond_estimate_anova <<- vector()
+  
+  meta_base_estimate_glmm <<- vector()
+  meta_sex_estimate_glmm <<- vector()
+  meta_cond_estimate_glmm <<- vector()
+  meta_sex_cond_estimate_glmm <<- vector()
+  
+  meta_base_estimate_bglmm <<- vector()
+  meta_sex_estimate_bglmm <<- vector()
+  meta_cond_estimate_bglmm <<- vector()
+  meta_sex_cond_estimate_bglmm <<- vector()
+  
+  meta_base_estimate_pp <<- vector()
+  meta_sex_estimate_pp <<- vector()
+  meta_cond_estimate_pp <<- vector()
+  meta_sex_cond_estimate_pp <<- vector()
+  
+  meta_base_estimate_upper_anova <<- vector()
+  meta_sex_estimate_upper_anova <<- vector()
+  meta_cond_estimate_upper_anova <<- vector()
+  meta_sex_cond_estimate_upper_anova <<- vector()
+  
+  meta_base_estimate_upper_glmm <<- vector()
+  meta_sex_estimate_upper_glmm <<- vector()
+  meta_cond_estimate_upper_glmm <<- vector()
+  meta_sex_cond_estimate_upper_glmm <<- vector()
+  
+  meta_base_estimate_upper_bglmm <<- vector()
+  meta_sex_estimate_upper_bglmm <<- vector()
+  meta_cond_estimate_upper_bglmm <<- vector()
+  meta_sex_cond_estimate_upper_bglmm <<- vector()
+  
+  meta_base_estimate_upper_pp <<- vector()
+  meta_sex_estimate_upper_pp <<- vector()
+  meta_cond_estimate_upper_pp <<- vector()
+  meta_sex_cond_estimate_upper_pp <<- vector()
+  
+  meta_base_estimate_lower_anova <<- vector()
+  meta_sex_estimate_lower_anova <<- vector()
+  meta_cond_estimate_lower_anova <<- vector()
+  meta_sex_cond_estimate_lower_anova <<- vector()
+  
+  meta_base_estimate_lower_glmm <<- vector()
+  meta_sex_estimate_lower_glmm <<- vector()
+  meta_cond_estimate_lower_glmm <<- vector()
+  meta_sex_cond_estimate_lower_glmm <<- vector()
+  
+  meta_base_estimate_lower_bglmm <<- vector()
+  meta_sex_estimate_lower_bglmm <<- vector()
+  meta_cond_estimate_lower_bglmm <<- vector()
+  meta_sex_cond_estimate_lower_bglmm <<- vector()
+  
+  meta_base_estimate_lower_pp <<- vector()
+  meta_sex_estimate_lower_pp <<- vector()
+  meta_cond_estimate_lower_pp <<- vector()
+  meta_sex_cond_estimate_lower_pp <<- vector()
+  
+  meta_sex_positive_rate_anova <<- vector()
+  meta_cond_positive_rate_anova <<- vector()
+  meta_sex_cond_positive_rate_anova <<- vector()
+  
+  meta_sex_positive_rate_glmm <<- vector()
+  meta_cond_positive_rate_glmm <<- vector()
+  meta_sex_cond_positive_rate_glmm <<- vector()
+  
+  meta_sex_positive_rate_bglmm <<- vector()
+  meta_cond_positive_rate_bglmm <<- vector()
+  meta_sex_cond_positive_rate_bglmm <<- vector()
+  
+  meta_sex_positive_rate_pp <<- vector()
+  meta_cond_positive_rate_pp <<- vector()
+  meta_sex_cond_positive_rate_pp <<- vector()
+  
+  meta_base_uncertainty_anova <<- vector()
+  meta_sex_uncertainty_anova <<- vector()
+  meta_cond_uncertainty_anova <<- vector()
+  meta_sex_cond_uncertainty_anova <<- vector()
+  
+  meta_base_uncertainty_glmm <<- vector()
+  meta_sex_uncertainty_glmm <<- vector()
+  meta_cond_uncertainty_glmm <<- vector()
+  meta_sex_cond_uncertainty_glmm <<- vector()
+  
+  meta_base_uncertainty_bglmm <<- vector()
+  meta_sex_uncertainty_bglmm <<- vector()
+  meta_cond_uncertainty_bglmm <<- vector()
+  meta_sex_cond_uncertainty_bglmm <<- vector()
+  
+  meta_base_uncertainty_pp <<- vector()
+  meta_sex_uncertainty_pp <<- vector()
+  meta_cond_uncertainty_pp <<- vector()
+  meta_sex_cond_uncertainty_pp <<- vector()
+}
