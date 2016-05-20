@@ -106,28 +106,7 @@ for (i in 1:length(b_bases)) {
 ### Vectors to store data
 # These store the results of simulations within each set
 # of parameter values
-repeat_id <- vector()
-expt <- vector()
-analysis_type <- vector()
-true_base <- vector()
-b_base_lower <- vector()
-b_base_med <- vector()
-b_base_upper <- vector()
-true_sex <- vector()
-b_sex_p_value <- vector()
-b_sex_lower <- vector()
-b_sex_med <- vector()
-b_sex_upper <- vector()
-true_cond <- vector()
-b_cond_p_value <- vector()
-b_cond_lower <- vector()
-b_cond_med <- vector()
-b_cond_upper <- vector()
-true_sex_cond <- vector()
-b_sex_cond_p_value <- vector()
-b_sex_cond_lower <- vector()
-b_sex_cond_med <- vector()
-b_sex_cond_upper <- vector()
+prepare_data_vectors()
 
 ###
 ### Each repeat starts here
