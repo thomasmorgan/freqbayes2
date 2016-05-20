@@ -47,6 +47,7 @@ do_anova <- TRUE
 do_glmm <- TRUE
 do_bglmm <- TRUE
 do_pp <- TRUE
+do_mega_bglmm <- TRUE
 
 ### Posterior-passing parameters
 # These give you various options wrt posterior passing
@@ -74,40 +75,21 @@ prepare_meta_vectors()
 
 ### For loops to iterate through parameter values
 for (i in 1:length(b_bases)) {
-  b_base <- b_bases[i]
   for (j in 1:length(b_sexs)) {
-    b_sex <- b_sexs[j]
     for (k in 1:length(b_conds)) {
-      b_cond <- b_conds[k]
       for (l in 1:length(b_sex_conds)) {
-        b_sex_cond <- b_sex_conds[l]
         for (m in 1:length(var_bases)) {
-          var_base <- var_bases[m]
           for (n in 1:length(var_sexs)) {
-            var_sex <- var_sexs[n]
             for (o in 1:length(var_conds)) {
-              var_cond <- var_conds[o]
               for (p in 1:length(var_sex_conds)) {
-                var_sex_cond <- var_sex_conds[p]
-                meta_true_base <- c(meta_true_base, rep(b_base, n_repeats))
-                meta_true_sex <- c(meta_true_sex, rep(b_sex, n_repeats))
-                meta_true_cond <- c(meta_true_cond, rep(b_cond, n_repeats))
-                meta_true_sex_cond <- c(meta_true_sex_cond, rep(b_sex_cond, n_repeats))
-                meta_var_base <- c(meta_var_base, rep(var_base, n_repeats))
-                meta_var_sex <- c(meta_var_sex, rep(var_sex, n_repeats))
-                meta_var_cond <- c(meta_var_cond, rep(var_cond, n_repeats))
-                meta_var_sex_cond <- c(meta_var_sex_cond, rep(var_sex_cond, n_repeats))
-                print(paste("running simulation with parameters: b_base: ", b_base,
-                            ", b_sex: ", b_sex,
-                            ", b_cond: ", b_cond,
-                            ", b_sex_cond: ", b_sex_cond,
-                            ", var_base: ", var_base,
-                            ", var_sex: ", var_sex,
-                            ", var_cond: ", var_cond,
-                            ", var_sex_cond: ", var_sex_cond,
-                            sep=" "))
-                
+
+### Set up values for the simulation
+# this function is in util.R
+# also save the values to the meta vectors
+prepare_for_simulation()
+
 ### Vectors to store data
+# this function is in util.R
 # These store the results of simulations within each set
 # of parameter values
 prepare_data_vectors()
@@ -167,7 +149,7 @@ save_results_meta()
       }
     }
   }
-} # end of all for all parameter value loops
+} # end of parameter value for loops
 
 meta_results <- compile_meta_results()
 

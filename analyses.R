@@ -119,8 +119,6 @@ do_analyses <- function() {
       b_sex_p_value <<- c(b_sex_p_value, NaN)
       b_cond_p_value <<- c(b_cond_p_value, NaN)
       b_sex_cond_p_value <<- c(b_sex_cond_p_value, NaN)
-      
-      rm(b_base_samples, b_sex_samples, b_cond_samples, b_sex_cond_samples)
     } # end of for each experiment loop
   }# end of do bglmm
   
@@ -175,9 +173,50 @@ do_analyses <- function() {
       # update the priors for the next run
       pp_u[1] <<- median(b_sex_cond_samples)
       pp_prec[1] <<- 1/var(b_sex_cond_samples)
-      
-      rm(b_base_samples, b_sex_samples, b_cond_samples, b_sex_cond_samples)
     } # end of for each experiment loop
   }# end of do pp
-  rm(data_sets, population, participants)
+  
+  if (do_mega_bglmm == TRUE) {
+    print(">>>>>>>>>>>> Doing mega bglmm")
+    # prep columns
+    # this function is in util.R
+    save_analysis_results_1("mega_bglmm")
+    
+    this_data_set <- data_sets
+    this_data_set$participant_id <- c(1:nrow(this_data_set))
+    successes <- this_data_set$response*n_trials_per_participant
+    np <- rep(n_participants_per_experiment*n_experiments_per_repeat, n_participants_per_experiment*n_experiments_per_repeat)
+    nt <- rep(n_trials_per_participant, n_participants_per_experiment*n_experiments_per_repeat)
+    this_data_set <- cbind(this_data_set, successes, np, nt)
+      
+    # do the mega_bglmm
+    model <- jags.model("bglmm.R", data=this_data_set, n.chains=3, quiet=TRUE)
+    nodes <- c("beta", "tau_participant")
+    samples <- coda.samples(model,nodes,2000,1)
+      
+    # save the results of the mega glmm
+    b_base_samples <- c(samples[,1][[1]], samples[,1][[2]], samples[,1][[3]])
+    b_sex_samples <- c(samples[,2][[1]], samples[,2][[2]], samples[,2][[3]])
+    b_cond_samples <- c(samples[,3][[1]], samples[,3][[2]], samples[,3][[3]])
+    b_sex_cond_samples <- c(samples[,4][[1]], samples[,4][[2]], samples[,4][[3]])
+    
+    b_base_med <<- c(b_base_med, median(b_base_samples))
+    b_sex_med <<- c(b_sex_med, median(b_sex_samples))
+    b_cond_med <<- c(b_cond_med, median(b_cond_samples))
+    b_sex_cond_med <<- c(b_sex_cond_med, median(b_sex_cond_samples))
+    
+    b_base_lower <<- c(b_base_lower, quantile(b_base_samples, probs=c(0.025)))
+    b_sex_lower <<- c(b_sex_lower, quantile(b_sex_samples, probs=c(0.025)))
+    b_cond_lower <<- c(b_cond_lower, quantile(b_cond_samples, probs=c(0.025)))
+    b_sex_cond_lower <<- c(b_sex_cond_lower, quantile(b_sex_cond_samples, probs=c(0.025)))
+    
+    b_base_upper <<- c(b_base_upper, quantile(b_base_samples, probs=c(0.975)))
+    b_sex_upper <<- c(b_sex_upper, quantile(b_sex_samples, probs=c(0.975)))
+    b_cond_upper <<- c(b_cond_upper, quantile(b_cond_samples, probs=c(0.975)))
+    b_sex_cond_upper <<- c(b_sex_cond_upper, quantile(b_sex_cond_samples, probs=c(0.975)))
+    
+    b_sex_p_value <<- c(b_sex_p_value, NaN)
+    b_cond_p_value <<- c(b_cond_p_value, NaN)
+    b_sex_cond_p_value <<- c(b_sex_cond_p_value, NaN)
+  }# end of do mega bglmm
 }
