@@ -3,6 +3,7 @@ library(lme4)
 library(rjags)
 library(gplots)
 source("util.R")
+source("simulation.R")
 
 ###            ###
 ### Parameters ###
@@ -123,14 +124,7 @@ for (rep in 1:n_repeats) {
   # It is created with the "doppelganger quadrangle" method
   # so there are equal number of men and women and the true
   # mean and true variance of each sub population is the same
-  print(">>>> Creating population")
-
-  id <- c(1:n_people)
-  sex <- c(rep(0, n_people/2), rep(1, n_people/2))
-  d_base <- rnorm(n_people/4, 0.0, var_base)
-  d_base <- c(d_base, 0-d_base, d_base, 0-d_base)
-  population <- data.frame(id, sex, d_base)
-  rm(id, sex, d_base)
+  create_population()
   
   ###
   ### Create the datsets for each experiment ###
