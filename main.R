@@ -23,8 +23,8 @@ source("plotting.R")
 b_bases <- c(0)
 b_sexs <- c(0)
 b_conds <- c(0)
-b_sex_conds <- c(0)
-var_bases <- c(0, 0.25, 0.5, 0.75, 1.0, 1.5, 2)
+b_sex_conds <- c(0, 0.1, 0.2, 0.3, 0.4, 0.5)
+var_bases <- c(0, 0.05, 0.1, 0.15, 0.2)
 var_sexs <- c(0)
 var_conds <- c(0)
 var_sex_conds <- c(0)
@@ -34,11 +34,14 @@ var_sex_conds <- c(0)
 # parameter values given in the "True values" setction above.
 # Warning! n_participants_per_experiment and n_people need to 
 # be divisible by 4!
-n_repeats <- 10
-n_experiments_per_repeat <- 20
+n_repeats <- 20
+n_experiments_per_repeat <- 60
 n_participants_per_experiment <- 80
 n_trials_per_participant <- 25
-n_people <- 100000
+n_people <- 1000000
+
+total_simulations <- length(b_bases) * length(b_sexs) * length(b_conds) * length(b_sex_conds) * length(var_bases) * length(var_sexs) * length(var_conds) * length(var_sex_conds) * n_repeats
+current_simulation <- 1
 
 ### Analysis parameters
 # These allow you to choose which analyses do you want
@@ -58,7 +61,7 @@ pp_final_expt_only <- TRUE
 # basically tell it what plots you want
 plot_sex_cond <- TRUE
 plot_var_base <- TRUE
-disp <- 0.02
+disp <- 0.1
 
 ### Vectors to store meta-data
 # This function is in util.R
@@ -100,6 +103,7 @@ prepare_data_vectors()
 
 for (rep in 1:n_repeats) {
   print(paste(">>>> Repeat", rep, "of", n_repeats, sep=" "))
+  print(paste(">>>> Simulation", current_simulation, "of", total_simulations, sep=" "))
 
   ###
   ### Create the population ###
