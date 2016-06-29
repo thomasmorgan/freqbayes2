@@ -104,6 +104,7 @@ prepare_data_vectors()
 for (rep in 1:n_repeats) {
   print(paste(">>>> Repeat", rep, "of", n_repeats, sep=" "))
   print(paste(">>>> Simulation", current_simulation, "of", total_simulations, sep=" "))
+  current_simulation <- current_simulation + 1
 
   ###
   ### Create the population ###
