@@ -226,10 +226,10 @@ save_results_meta <- function() {
       meta_cond_estimate_pp <<- c(meta_cond_estimate_pp, mean(pp_results$b_cond_med))
       meta_sex_cond_estimate_pp <<- c(meta_sex_cond_estimate_pp, mean(pp_results$b_sex_cond_med))
     } else {
-      meta_base_estimate_pp <<- c(meta_base_estimate_pp, pp_results$b_base_med[pp_results$expt == n_experiments_per_repeat])
-      meta_sex_estimate_pp <<- c(meta_sex_estimate_pp, pp_results$b_sex_med[pp_results$expt == n_experiments_per_repeat])
-      meta_cond_estimate_pp <<- c(meta_cond_estimate_pp, pp_results$b_cond_med[pp_results$expt == n_experiments_per_repeat])
-      meta_sex_cond_estimate_pp <<- c(meta_sex_cond_estimate_pp, pp_results$b_sex_cond_med[pp_results$expt == n_experiments_per_repeat])
+      meta_base_estimate_pp <<- c(meta_base_estimate_pp, mean(pp_results$b_base_med[pp_results$expt == n_experiments_per_repeat]))
+      meta_sex_estimate_pp <<- c(meta_sex_estimate_pp, mean(pp_results$b_sex_med[pp_results$expt == n_experiments_per_repeat]))
+      meta_cond_estimate_pp <<- c(meta_cond_estimate_pp, mean(pp_results$b_cond_med[pp_results$expt == n_experiments_per_repeat]))
+      meta_sex_cond_estimate_pp <<- c(meta_sex_cond_estimate_pp, mean(pp_results$b_sex_cond_med[pp_results$expt == n_experiments_per_repeat]))
     }
     
     meta_base_estimate_mega_bglmm <<- c(meta_base_estimate_mega_bglmm, mean(mega_bglmm_results$b_base_med))
@@ -258,10 +258,10 @@ save_results_meta <- function() {
       meta_cond_estimate_upper_pp <<- c(meta_cond_estimate_upper_pp, mean(pp_results$b_cond_upper))
       meta_sex_cond_estimate_upper_pp <<- c(meta_sex_cond_estimate_upper_pp, mean(pp_results$b_sex_cond_upper))
     } else {
-      meta_base_estimate_upper_pp <<- c(meta_base_estimate_upper_pp, pp_results$b_base_upper[pp_results$expt == n_experiments_per_repeat])
-      meta_sex_estimate_upper_pp <<- c(meta_sex_estimate_upper_pp, pp_results$b_sex_upper[pp_results$expt == n_experiments_per_repeat])
-      meta_cond_estimate_upper_pp <<- c(meta_cond_estimate_upper_pp, pp_results$b_cond_upper[pp_results$expt == n_experiments_per_repeat])
-      meta_sex_cond_estimate_upper_pp <<- c(meta_sex_cond_estimate_upper_pp, pp_results$b_sex_cond_upper[pp_results$expt == n_experiments_per_repeat])
+      meta_base_estimate_upper_pp <<- c(meta_base_estimate_upper_pp, mean(pp_results$b_base_upper[pp_results$expt == n_experiments_per_repeat]))
+      meta_sex_estimate_upper_pp <<- c(meta_sex_estimate_upper_pp, mean(pp_results$b_sex_upper[pp_results$expt == n_experiments_per_repeat]))
+      meta_cond_estimate_upper_pp <<- c(meta_cond_estimate_upper_pp, mean(pp_results$b_cond_upper[pp_results$expt == n_experiments_per_repeat]))
+      meta_sex_cond_estimate_upper_pp <<- c(meta_sex_cond_estimate_upper_pp, mean(pp_results$b_sex_cond_upper[pp_results$expt == n_experiments_per_repeat]))
     }
     
     meta_base_estimate_upper_mega_bglmm <<- c(meta_base_estimate_upper_mega_bglmm, mean(mega_bglmm_results$b_base_upper))
@@ -290,10 +290,10 @@ save_results_meta <- function() {
       meta_cond_estimate_lower_pp <<- c(meta_cond_estimate_lower_pp, mean(pp_results$b_cond_lower))
       meta_sex_cond_estimate_lower_pp <<- c(meta_sex_cond_estimate_lower_pp, mean(pp_results$b_sex_cond_lower))
     } else {
-      meta_base_estimate_lower_pp <<- c(meta_base_estimate_lower_pp, pp_results$b_base_lower[pp_results$expt == n_experiments_per_repeat])
-      meta_sex_estimate_lower_pp <<- c(meta_sex_estimate_lower_pp, pp_results$b_sex_lower[pp_results$expt == n_experiments_per_repeat])
-      meta_cond_estimate_lower_pp <<- c(meta_cond_estimate_lower_pp, pp_results$b_cond_lower[pp_results$expt == n_experiments_per_repeat])
-      meta_sex_cond_estimate_lower_pp <<- c(meta_sex_cond_estimate_lower_pp, pp_results$b_sex_cond_lower[pp_results$expt == n_experiments_per_repeat])
+      meta_base_estimate_lower_pp <<- c(meta_base_estimate_lower_pp, mean(pp_results$b_base_lower[pp_results$expt == n_experiments_per_repeat]))
+      meta_sex_estimate_lower_pp <<- c(meta_sex_estimate_lower_pp, mean(pp_results$b_sex_lower[pp_results$expt == n_experiments_per_repeat]))
+      meta_cond_estimate_lower_pp <<- c(meta_cond_estimate_lower_pp, mean(pp_results$b_cond_lower[pp_results$expt == n_experiments_per_repeat]))
+      meta_sex_cond_estimate_lower_pp <<- c(meta_sex_cond_estimate_lower_pp, mean(pp_results$b_sex_cond_lower[pp_results$expt == n_experiments_per_repeat]))
     }
     
     meta_base_estimate_lower_mega_bglmm <<- c(meta_base_estimate_lower_mega_bglmm, mean(mega_bglmm_results$b_base_lower))
@@ -318,9 +318,9 @@ save_results_meta <- function() {
       meta_cond_positive_rate_pp <<- c(meta_cond_positive_rate_pp, mean(pp_results$b_cond_lower > 0 | pp_results$b_cond_upper < 0))
       meta_sex_cond_positive_rate_pp <<- c(meta_sex_cond_positive_rate_pp, mean(pp_results$b_sex_cond_lower > 0 | pp_results$b_sex_cond_upper < 0))
     } else {
-      meta_sex_positive_rate_pp <<- c(meta_sex_positive_rate_pp, 1*(pp_results$b_sex_lower[pp_results$expt == n_experiments_per_repeat] > 0 | pp_results$b_sex_upper[pp_results$expt == n_experiments_per_repeat] < 0))
-      meta_cond_positive_rate_pp <<- c(meta_cond_positive_rate_pp, 1*(pp_results$b_cond_lower[pp_results$expt == n_experiments_per_repeat] > 0 | pp_results$b_cond_upper[pp_results$expt == n_experiments_per_repeat] < 0))
-      meta_sex_cond_positive_rate_pp <<- c(meta_sex_cond_positive_rate_pp, 1*(pp_results$b_sex_cond_lower[pp_results$expt == n_experiments_per_repeat] > 0 | pp_results$b_sex_cond_upper[pp_results$expt == n_experiments_per_repeat] < 0))
+      meta_sex_positive_rate_pp <<- c(meta_sex_positive_rate_pp, 1*(mean(pp_results$b_sex_lower[pp_results$expt == n_experiments_per_repeat]) > 0 | mean(pp_results$b_sex_upper[pp_results$expt == n_experiments_per_repeat]) < 0))
+      meta_cond_positive_rate_pp <<- c(meta_cond_positive_rate_pp, 1*(mean(pp_results$b_cond_lower[pp_results$expt == n_experiments_per_repeat]) > 0 | mean(pp_results$b_cond_upper[pp_results$expt == n_experiments_per_repeat]) < 0))
+      meta_sex_cond_positive_rate_pp <<- c(meta_sex_cond_positive_rate_pp, 1*(mean(pp_results$b_sex_cond_lower[pp_results$expt == n_experiments_per_repeat]) > 0 | mean(pp_results$b_sex_cond_upper[pp_results$expt == n_experiments_per_repeat]) < 0))
     }
     
     meta_sex_positive_rate_mega_bglmm <<- c(meta_sex_positive_rate_mega_bglmm, mean(mega_bglmm_results$b_sex_lower > 0 | mega_bglmm_results$b_sex_upper < 0))
@@ -348,10 +348,10 @@ save_results_meta <- function() {
       meta_cond_uncertainty_pp <<- c(meta_cond_uncertainty_pp, mean(pp_results$b_cond_upper - pp_results$b_cond_lower))
       meta_sex_cond_uncertainty_pp <<- c(meta_sex_cond_uncertainty_pp, mean(pp_results$b_sex_cond_upper - pp_results$b_sex_cond_lower))
     } else {
-      meta_base_uncertainty_pp <<- c(meta_base_uncertainty_pp, pp_results$b_base_upper[pp_results$expt == n_experiments_per_repeat] - pp_results$b_base_lower[pp_results$expt == n_experiments_per_repeat])
-      meta_sex_uncertainty_pp <<- c(meta_sex_uncertainty_pp, pp_results$b_sex_upper[pp_results$expt == n_experiments_per_repeat] - pp_results$b_sex_lower[pp_results$expt == n_experiments_per_repeat])
-      meta_cond_uncertainty_pp <<- c(meta_cond_uncertainty_pp, pp_results$b_cond_upper[pp_results$expt == n_experiments_per_repeat] - pp_results$b_cond_lower[pp_results$expt == n_experiments_per_repeat])
-      meta_sex_cond_uncertainty_pp <<- c(meta_sex_cond_uncertainty_pp, pp_results$b_sex_cond_upper[pp_results$expt == n_experiments_per_repeat] - pp_results$b_sex_cond_lower[pp_results$expt == n_experiments_per_repeat])
+      meta_base_uncertainty_pp <<- c(meta_base_uncertainty_pp, mean(pp_results$b_base_upper[pp_results$expt == n_experiments_per_repeat] - pp_results$b_base_lower[pp_results$expt == n_experiments_per_repeat]))
+      meta_sex_uncertainty_pp <<- c(meta_sex_uncertainty_pp, mean(pp_results$b_sex_upper[pp_results$expt == n_experiments_per_repeat] - pp_results$b_sex_lower[pp_results$expt == n_experiments_per_repeat]))
+      meta_cond_uncertainty_pp <<- c(meta_cond_uncertainty_pp, mean(pp_results$b_cond_upper[pp_results$expt == n_experiments_per_repeat] - pp_results$b_cond_lower[pp_results$expt == n_experiments_per_repeat]))
+      meta_sex_cond_uncertainty_pp <<- c(meta_sex_cond_uncertainty_pp, mean(pp_results$b_sex_cond_upper[pp_results$expt == n_experiments_per_repeat] - pp_results$b_sex_cond_lower[pp_results$expt == n_experiments_per_repeat]))
     }
     
     meta_base_uncertainty_mega_bglmm <<- c(meta_base_uncertainty_mega_bglmm, mean(mega_bglmm_results$b_base_upper - mega_bglmm_results$b_base_lower))
