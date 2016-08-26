@@ -5,7 +5,7 @@ library(gplots)
 source("util.R")
 source("simulation.R")
 source("analyses.R")
-source("plotting.R")
+source("contours.R")
 
 ###            ###
 ### Parameters ###
@@ -24,7 +24,7 @@ b_bases <- c(0)
 b_sexs <- c(0)
 b_conds <- c(0)
 b_sex_conds <- c(0, 0.5, 1, 1.5, 2)
-var_bases <- c(0, 0.25, 0.5, 0.75, 1)
+var_bases <- c(0, 0.5, 1, 1.5, 2)
 var_sexs <- c(0)
 var_conds <- c(0)
 var_sex_conds <- c(0)
@@ -168,6 +168,6 @@ tidy_workspace()
 detach(meta_results)
 attach(meta_results)
 
-plot_graphs()
+plot_contours()
   
   
