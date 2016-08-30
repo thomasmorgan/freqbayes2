@@ -12,7 +12,7 @@ plot_contours <- function() {
     matrix2 <- acast(matrix, x~y, value.var="z", fun.aggregate=mean)
     filled.contour(matrix2,
                    x=c(0, 0.12, 0.23, 0.32, 0.38),
-                   y=c(0, 0.5, 1, 1.5, 2),
+                   y=c(0, 0.25, 0.5, 0.75, 1),
                    xlim = c(0, 0.38), ylim = c(0, 2), zlim=c(-0.02, 0.5),
                    color.palette = terrain.colors,
                    xlab="true", ylab="var",
@@ -40,7 +40,7 @@ plot_contours <- function() {
     matrix2 <- acast(matrix, x~y, value.var="z", fun.aggregate=mean)
     filled.contour(matrix2,
                    x=c(0, 0.12, 0.23, 0.32, 0.38),
-                   y=c(0, 0.5, 1, 1.5, 2),
+                   y=c(0, 0.25, 0.5, 0.75, 1),
                    xlim = c(0, 0.38), ylim = c(0, 2), zlim=c(0, 1),
                    color.palette = terrain.colors,
                    xlab="true", ylab="var",
@@ -68,7 +68,7 @@ plot_contours <- function() {
     matrix2 <- acast(matrix, x~y, value.var="z", fun.aggregate=mean)
     filled.contour(matrix2,
                    x=c(0, 0.12, 0.23, 0.32, 0.38),
-                   y=c(0, 0.5, 1, 1.5, 2),
+                   y=c(0, 0.25, 0.5, 0.75, 1),
                    xlim = c(0, 0.38), ylim = c(0, 2), zlim=c(0, 1),
                    color.palette = terrain.colors,
                    xlab="true", ylab="var",
@@ -96,7 +96,7 @@ plot_contours <- function() {
     matrix2 <- acast(matrix, x~y, value.var="z", fun.aggregate=mean)
     filled.contour(matrix2,
                    x=c(0, 0.12, 0.23, 0.32, 0.38),
-                   y=c(0, 0.5, 1, 1.5, 2),
+                   y=c(0, 0.25, 0.5, 0.75, 1),
                    xlim = c(0, 0.38), ylim = c(0, 2), zlim=c(-0.1, 0.1),
                    color.palette = terrain.colors,
                    xlab="true", ylab="var",
