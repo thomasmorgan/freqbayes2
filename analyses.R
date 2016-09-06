@@ -51,7 +51,7 @@ do_analyses <- function() {
       
       # do the glmm
       glmm <- glmer(cbind(response*n_trials_per_participant,  (1-response)*n_trials_per_participant) ~ sex + condition + sex*condition + (1|participant_id), family = binomial, data=this_data_set)
-      ci <- confint(glmm, method="Wald")
+      ci <- confint(glmm, method="Wald", parm=c("(Intercept)", "sex", "condition", "sex:condition"))
       fe <- fixef(glmm)
       
       # save the results of the glmm
