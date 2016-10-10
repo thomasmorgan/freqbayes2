@@ -18,10 +18,16 @@ plot_dataset_0_0$estimate_lower <- ifelse((plot_dataset_0_0$analysis_type == "an
 #plot on same axis
 limits <- aes(ymax = plot_dataset_0_0$estimate_upper, ymin = plot_dataset_0_0$estimate_lower)
 APlot <- ggplot(plot_dataset_0_0, aes(x=expt, y=estimate, group =analysis_type, col=analysis_type))
-APlot + geom_point(data = plot_dataset_0_0, size = 2) + 
-  geom_errorbar(limits, width = 1) +
-  geom_hline(aes(yintercept=0), linetype="solid", color="black", size=1, show.legend=FALSE)
-ylab("estimate")
+APlot + geom_point(data = plot_dataset_0_0, size = 1, position = position_dodge(width = 0)) + 
+  geom_errorbar(limits, width = 6, position = position_dodge(width = 0)) +
+  geom_hline(aes(yintercept=0), linetype="solid", color="black", size=1, show.legend=FALSE) +
+  labs(color="Analysis Type") +
+  xlab("Data set") +
+  ylab("Analysis estimate")+
+  theme_linedraw() + theme(text = element_text(size=12), axis.title.y=element_text(margin=margin(0,12,0,0)))
+
+#used dev.off when got error in call.graphics invalid graphics state
+#dev.off()
 
 
 ### making subsets -in case plot by separate graphs? no longer needed##
