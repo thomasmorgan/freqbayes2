@@ -3,8 +3,11 @@
 
 library(reshape2)
 
+#####our latest results are in the file 18_09_16 NOT meta_results.txt####
+meta_results <- read.delim("meta_results_18_09_16.txt")
+
 #see mergingData.R file for when meta_results_full was created
-meta_results <- meta_results_full
+#meta_results <- meta_results_full
 #write.table(meta_results, "meta_results.txt", sep="\t")
 
 #just true value = 0? 
