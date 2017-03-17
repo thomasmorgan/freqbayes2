@@ -24,7 +24,7 @@ ZeroEffect_PositiveRate <- subset(ZeroEffect, select = c("meta_var_base",
                                                          "meta_sex_cond_positive_rate_pp",
                                                          "meta_sex_cond_positive_rate_mega_bglmm"))
 
-means <- c(mean(ZeroEffect_PositiveRate$meta_sex_cond_positive_rate_anova), mean(ZeroEffect_PositiveRate$meta_sex_cond_positive_rate_glmm), mean(ZeroEffect_PositiveRate$meta_sex_cond_positive_rate_bglmm), mean(ZeroEffect_PositiveRate$meta_sex_cond_positive_rate_pp))
+means <- c(mean(ZeroEffect_PositiveRate$meta_sex_cond_positive_rate_anova), mean(ZeroEffect_PositiveRate$meta_sex_cond_positive_rate_glmm), mean(ZeroEffect_PositiveRate$meta_sex_cond_positive_rate_bglmm), mean(ZeroEffect_PositiveRate$meta_sex_cond_positive_rate_pp), mean(ZeroEffect_PositiveRate$meta_sex_cond_positive_rate_mega_bglmm))
 print(means)
 
 variance <- ZeroEffect_PositiveRate$meta_var_base
@@ -73,4 +73,50 @@ mymatrix1_anovaP <- data.frame(x = meta_results$meta_true_sex_cond,
 mymatrix_anovaP <- acast(mymatrix1_anovaP, x~y, value.var="z", fun.aggregate=mean)
 
 filled.contour(mymatrix_anovaP, x=c(0, 0.1, 0.2, 0.3, 0.4, 0.5), y=c(0, 0.5, 1, 1.5, 2), xlim = c(0, 0.5), ylim = c(0, 2), color.palette = terrain.colors, xlab="true", ylab="var", main="anova positive rate")
+
+ZeroEffect_PositiveRate$noFalsePos_anova <- ZeroEffect_PositiveRate$meta_sex_cond_positive_rate_anova*60
+ZeroEffect_PositiveRate$noFalsePos_glmm <- ZeroEffect_PositiveRate$meta_sex_cond_positive_rate_glmm*60
+ZeroEffect_PositiveRate$noFalsePos_bglmm <- ZeroEffect_PositiveRate$meta_sex_cond_positive_rate_bglmm*60
+
+PosRates <- subset(ZeroEffect_PositiveRate, select = c("meta_var_base",
+                                                      "meta_sex_cond_positive_rate_pp",
+                                                      "meta_sex_cond_positive_rate_mega_bglmm",
+                                                      "noFalsePos_anova",
+                                                      "noFalsePos_glmm",
+                                                      "noFalsePos_bglmm"))
+
+?melt
+?reshape
+FalsePosReshape <- reshape(PosRates, 
+                 varying = list(c("meta_sex_cond_positive_rate_pp","meta_sex_cond_positive_rate_mega_bglmm","noFalsePos_anova","noFalsePos_glmm","noFalsePos_bglmm")),
+                 timevar = "analysis type",
+                 v.names = c("falsePos"), 
+                 direction = "long")
+
+FalsePos <- FalsePosReshape
+FalsePos$trialNo <- ifelse(FalsePos$`analysis type`<3, 1, 60)
+colnames(FalsePos)[2]<- "analysisType"
+FalsePos$analysisType[FalsePos$analysisType==1] <- "PP"
+FalsePos$analysisType[FalsePos$analysisType==2] <- "megaBglmm"
+FalsePos$analysisType[FalsePos$analysisType==3] <- "anova"
+FalsePos$analysisType[FalsePos$analysisType==4] <- "glmm"
+FalsePos$analysisType[FalsePos$analysisType==5] <- "bglmm"
+
+
+#Now binomial model as Tom suggested: 
+
+library(rethinking)
+
+trialNo <- FalsePos$trialNo
+analysisType <- FalsePos$analysisType
+falsePos <- FalsePos$falsePos
+
+fpModel <- map2stan(
+  alist(falsePos ~ dbinom(60, p),
+        logit(p) <- a + b_at*analysisType,
+        a ~ dnorm(0,10),
+        c(b_at) ~ dnorm(0,4)
+  ),
+  data=FalsePos, warmup=1000, iter=3000, chains=1, cores=1 )
+
 
