@@ -5,10 +5,12 @@ model{
  
   # Priors  
   # sd = 1/(0.1)^2 = 100 ~ not very informative
+  
   b_aT ~ dnorm(0,0.1)
 
   # The model 
   # Iterate over every data point we have
+  
   for(i in 1:nObs){
     
     # A deterministic node      

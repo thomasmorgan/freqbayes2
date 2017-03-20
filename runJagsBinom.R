@@ -18,16 +18,12 @@ jags.init = function(){
   list('b_aT' =rnorm(1)) 
 }
 
-modelNumber = 1
+
 n.chains = 3
 n.cluster = n.chains
 
-
-##### Logistic regression #####
-if(modelNumber==1){
-  #### 1. Full SWITCHING model ####
   
-  my.model <- jags.parallel(data=jags.data,inits=jags.init,
+my.model <- jags.parallel(data=jags.data,inits=jags.init,
                             parameters.to.save = jags.params,
                             model.file='jagsBinom.jags',
                             n.chains = n.chains,n.iter=610,n.burnin=10,
@@ -39,10 +35,6 @@ if(modelNumber==1){
   # Lets focus on the relevant parameters (ignore participant and question pars)
   relPars = c('b_aT')
   
-  # Save plots
-  pdf('jagsBinom.pdf',width = 8.27,height=11.02)
-  plot(my.samples[,relPars])
-  #dev.off()
   
   # Save summary statistics
   my.summary = summary(my.samples[,relPars])
@@ -54,8 +46,5 @@ if(modelNumber==1){
   my.samples.jagsBinom = my.samples
   save('my.samples.jagsBinom',file='jagsBinom.dump')
   
-}else {
-  print("No such model")
-}
 
 
