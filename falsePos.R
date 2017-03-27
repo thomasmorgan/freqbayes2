@@ -126,9 +126,8 @@ falsePos <- FalsePos$falsePos
 
 fpModel <- map2stan(
   alist(falsePos ~ dbinom(trialNo, p),
-        logit(p) <- a + b_at*analysisType,
-        a ~ dnorm(0,10),
-        c(b_at) ~ dnorm(0,4)
+        logit(p) <- b_at*analysisType,
+        c(b_at) ~ dnorm(0,10)
   ),
   data=FalsePos, warmup=1000, iter=3000, chains=1, cores=1 )
 
