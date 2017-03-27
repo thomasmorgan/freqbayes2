@@ -71,8 +71,13 @@ ZeroEffect_PositiveRate$noFalsePos_bglmm <- ZeroEffect_PositiveRate$PositiveRate
 ZeroEffect_PositiveRate$noFalsePos_pp <- ZeroEffect_PositiveRate$PositiveRate[ZeroEffect_PositiveRate$AnalysisType=="pp"]
 ZeroEffect_PositiveRate$noFalsePos_meta <- ZeroEffect_PositiveRate$PositiveRate[ZeroEffect_PositiveRate$AnalysisType=="megaBglmm"]
 
+# the above lines make a 500 row table that repeats itself every 100 lines
+# we must take only the first 100 rows
 
-PosRates <- subset(ZeroEffect_PositiveRate, select = c("Variance", "PositiveRate",
+ZeroEffect_PositiveRate <- ZeroEffect_PositiveRate[1:100,]
+
+
+PosRates <- subset(ZeroEffect_PositiveRate, select = c("Variance",
                                                       "noFalsePos_pp",
                                                       "noFalsePos_meta",
                                                       "noFalsePos_anova",
