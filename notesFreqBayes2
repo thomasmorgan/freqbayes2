@@ -1,0 +1,8 @@
+Notes:
+
+line 191 in my version of util.R: 
+saved_results <<- results
+
+this saves each dataset for one run of a simulation
+
+if

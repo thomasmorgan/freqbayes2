@@ -25,8 +25,8 @@ ZeroEffect_PositiveRate <- subset(ZeroEffect, select = c("meta_var_base",
                                                          "meta_sex_cond_positive_rate_pp",
                                                          "meta_sex_cond_positive_rate_mega_bglmm"))
 
-#means <- c(mean(ZeroEffect_PositiveRate$meta_sex_cond_positive_rate_anova), mean(ZeroEffect_PositiveRate$meta_sex_cond_positive_rate_glmm), mean(ZeroEffect_PositiveRate$meta_sex_cond_positive_rate_bglmm), mean(ZeroEffect_PositiveRate$meta_sex_cond_positive_rate_pp), mean(ZeroEffect_PositiveRate$meta_sex_cond_positive_rate_mega_bglmm))
-#print(means)
+means <- c(mean(ZeroEffect_PositiveRate$meta_sex_cond_positive_rate_anova), mean(ZeroEffect_PositiveRate$meta_sex_cond_positive_rate_glmm), mean(ZeroEffect_PositiveRate$meta_sex_cond_positive_rate_bglmm), mean(ZeroEffect_PositiveRate$meta_sex_cond_positive_rate_pp), mean(ZeroEffect_PositiveRate$meta_sex_cond_positive_rate_mega_bglmm))
+print(means)
 
 
 
@@ -103,6 +103,7 @@ FalsePos$analysisType[FalsePos$analysisType==5] <- "bglmm"
 
 #now save this for future use!
 write.table(FalsePos, "FalsePos.txt", sep="\t")
+FalsePos <- read.delim("FalsePos.txt")
 
 as.factor(FalsePos$analysisType)
 as.factor(FalsePos$Variance)
@@ -123,12 +124,24 @@ library(rethinking)
 trialNo <- FalsePos$trialNo
 analysisType <- FalsePos$analysisType
 falsePos <- FalsePos$falsePos
+anova <- FalsePos[FalsePos$analysisType=="anova",]
+
+FalsePos$falsePos <- round(FalsePos$falsePos)
+
 
 fpModel <- map2stan(
   alist(falsePos ~ dbinom(trialNo, p),
-        logit(p) <- b_at*analysisType,
-        c(b_at) ~ dnorm(0,10)
+        logit(p) <- b_at[analysisType],
+        b_at[analysisType] ~ dnorm(0,10)
   ),
   data=FalsePos, warmup=1000, iter=3000, chains=1, cores=1 )
+
+precis(fpModel, depth = 2)
+table(analysisType)
+plot(precis(fpModel, depth=2))
+
+
+
+
 
 

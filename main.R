@@ -157,6 +157,7 @@ save_results_meta()
 } # end of parameter value for loops
 
 meta_results <- compile_meta_results()
+#meta_results <- read.delim("meta_results_18_09_16.txt")
 
 tidy_workspace()
 
@@ -171,3 +172,4 @@ attach(meta_results)
 plot_contours()
   
   
+dev.off
