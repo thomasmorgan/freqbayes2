@@ -2,6 +2,8 @@
 
 library(reshape2)
 library(ggplot2)
+install.packages("viridis")
+library(viridis)
 
 
 saved_0_2 <- read.delim("saved_0_2.txt")
@@ -19,8 +21,8 @@ plot_dataset_0_2$estimate_lower <- ifelse((plot_dataset_0_2$analysis_type == "an
 limits <- aes(ymax = plot_dataset_0_2$estimate_upper, ymin = plot_dataset_0_2$estimate_lower)
 
 APlot <- ggplot(plot_dataset_0_2, aes(x=expt, y=estimate, group =analysis_type, col=analysis_type))
-APlot + geom_point(data = plot_dataset_0_2, size = 1, position = position_dodge(width = 0)) + 
-  scale_color_brewer(palette="BrBG") +
+APlot + geom_point(data = plot_dataset_0_2, size = 1.2, position = position_dodge(width = 0)) + 
+  scale_color_manual(values=c("cyan4", "darkgoldenrod1", "black", "darkorchid1")) +
   geom_errorbar(limits, width = 6, position = position_dodge(width = 0)) +
   geom_hline(aes(yintercept=0.38), linetype="solid", color="black", size=1, show.legend=FALSE) +
   labs(color="Analysis Type") +

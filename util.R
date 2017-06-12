@@ -188,6 +188,7 @@ save_results_meta <- function() {
                         true_sex, b_sex_p_value, b_sex_lower, b_sex_med, b_sex_upper,
                         true_cond, b_cond_p_value, b_cond_lower, b_cond_med, b_cond_upper, 
                         true_sex_cond, b_sex_cond_p_value, b_sex_cond_lower, b_sex_cond_med, b_sex_cond_upper)
+  saved_results <<- results
   rm(this_anova, this_data_set, model, ci, p_vals,
      glmm, fe,
      successes, np, nt,
